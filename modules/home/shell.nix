@@ -4,6 +4,14 @@
     enable = true;
     nix-direnv.enable = true;
     enableZshIntegration = true;
+    
+    # Silence warning timeouts and avoid output lag on slow evals
+    config = {
+      global = {
+        warn_timeout = "500ms";
+        hide_env_diff = true;
+      };
+    };
   };
 
   programs.tmux = {
@@ -15,6 +23,7 @@
     extraConfig = ''
       set -g base-index 1
       setw -g pane-base-index 1
+      setw -g automatic-rename on
       set -g renumber-windows on
       set -g status-interval 5
       set -g escape-time 0
@@ -28,17 +37,19 @@
 
   programs.zsh = {
     enable = true;
-    enableCompletion = true;
+    
+    # DISABLE Home Manager's heavy Nix-store completion scanning
+    enableCompletion = false; 
+    
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
     oh-my-zsh = {
       enable = true;
       theme = "robbyrussell";
+      # REMOVED: "direnv" (causes duplicate hooks) and "docker" (causes prompt lag)
       plugins = [
         "git"
-        "docker"
-        "direnv"
       ];
     };
 
