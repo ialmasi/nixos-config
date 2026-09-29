@@ -13,6 +13,7 @@
 
     # Git / GitHub (gh needs `gh auth login` once)
     gh
+    gemini-cli
 
     # Containers CLI (daemon is system-level; see modules/nixos/docker.nix)
     docker-compose
